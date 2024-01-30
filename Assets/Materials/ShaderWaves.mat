@@ -106,11 +106,15 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _Depth: 9.95
+    - _DepthFade: 13.3
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _FoamNoiseScale: 1
+    - _FoamNoiseSpeed: 1
+    - _FoamWidth: 2
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -122,7 +126,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.8
+    - _Smoothness: 0.6
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -135,12 +139,15 @@ Material:
     - _Amplitudes: {r: 0.5, g: 0.5, b: 1, a: 0.3}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0.44313726, b: 0.83137256, a: 1}
+    - _DeepColor: {r: 0.13333334, g: 0.35686275, b: 0.6039216, a: 1}
     - _Direction: {r: 0.43, g: 0, b: 0.3, a: 0}
     - _Direction1: {r: 0.1, g: 0, b: 1, a: 0}
     - _Direction2: {r: 0.3, g: 0, b: 0.3, a: 0}
     - _Direction3: {r: 1, g: 0, b: 0.1, a: 0}
     - _Direction4: {r: 1, g: 0, b: 0.7, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 0}
+    - _ShallowColor: {r: 0.24554999, g: 0.52714294, b: 0.5849056, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _SpecularColor: {r: 0, g: 0, b: 0, a: 0}
     - _TimeScales: {r: 1, g: 2, b: 1, a: 0.5}
