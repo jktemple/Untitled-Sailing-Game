@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -36,6 +37,8 @@ public class WaveManager : MonoBehaviour
     {
         return amplitude * Mathf.Sin(_x/length + offset);
     }
+
+    
 
 
 }
