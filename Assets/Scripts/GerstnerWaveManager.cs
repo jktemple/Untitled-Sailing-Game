@@ -7,15 +7,15 @@ using UnityEngine;
 public class GerstnerWaveManager : MonoBehaviour
 {
     public static GerstnerWaveManager instance;
-    public Vector3 direction1;
-    public Vector3 direction2;
-    public Vector3 direction3;
-    public Vector3 direction4;
-    public float gravity;
-    public float depth;
-    public Vector4 amplitudes;
-    public float phase;
-    public Vector4 timescales;
+     Vector3 direction1;
+     Vector3 direction2;
+     Vector3 direction3;
+     Vector3 direction4;
+     float gravity;
+     float depth;
+     Vector4 amplitudes;
+     float phase;
+     Vector4 timescales;
 
     private void Awake()
     {
