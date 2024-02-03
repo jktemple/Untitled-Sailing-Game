@@ -6,7 +6,7 @@ public class Floater : MonoBehaviour
 {
 
     
-    public Rigidbody rigidbody;
+    public Rigidbody rb;
     public float depthBeforeSubmerged = 1f;
     public float displacementAmount = 3f;
     public int floaterCount = 1;
@@ -16,15 +16,15 @@ public class Floater : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidbody.AddForceAtPosition(Physics.gravity/floaterCount, transform.position, ForceMode.Acceleration);
+        rb.AddForceAtPosition(Physics.gravity/floaterCount, transform.position, ForceMode.Acceleration);
 
         float waveHeight = GerstnerWaveManager.instance.GetGerstnerWaveHeight(transform.position);
         if (transform.position.y < waveHeight)
         {
             float displacmentMultiplier = Mathf.Clamp01((waveHeight-transform.position.y)/depthBeforeSubmerged) * displacementAmount;
-            rigidbody.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacmentMultiplier, 0f), transform.position, ForceMode.Acceleration);
-            rigidbody.AddForce(displacmentMultiplier * -rigidbody.velocity * waterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
-            rigidbody.AddTorque(displacmentMultiplier * -rigidbody.angularVelocity * waterAngularDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            rb.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacmentMultiplier, 0f), transform.position, ForceMode.Acceleration);
+            rb.AddForce(displacmentMultiplier * -rb.velocity * waterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            rb.AddTorque(displacmentMultiplier * -rb.angularVelocity * waterAngularDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
         
         }
     }
