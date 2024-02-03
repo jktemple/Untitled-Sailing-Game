@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 2833297902286734506}
   - component: {fileID: 7336400911358983567}
   - component: {fileID: 6115471486809442706}
+  - component: {fileID: 1636227292144045839}
   m_Layer: 0
   m_Name: Medium Poly Ship Fixed Sails Final
   m_TagString: Untagged
@@ -440,6 +441,21 @@ MonoBehaviour:
   windDirection: {x: 0, y: 0}
   windSpeed: 0
   rb: {fileID: 0}
+--- !u!114 &1636227292144045839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621272493953426453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2a93722379e21478f8d68ab2d74490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sail: {fileID: 7792113753134992757}
+  boat: {fileID: 6115471486809442706}
+  windStrengthModifier: 100
 --- !u!1 &817723815396421714
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,16 +16,22 @@ public class BoatController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        /**
+         * float boatAngleModifier = ...
+         * float sailAngleModifier = ...
+         * Vector3 direction = new(transform.forward.x, 0, transform.forward.z);
+         * rb.AddForce(direction*windSpeed*boatAngleModifier*sailAngleModifier*Time.FixedDeltaTime, ForceMode.Force);
+         * 
+         */
     }
 
     public float GetBoatAngleToWind()
     {
         Vector2 boatDirection = new Vector2(transform.forward.x, transform.forward.z);
         float angletowind = Mathf.Acos(Vector2.Dot(windDirection.normalized, boatDirection.normalized)) * Mathf.Rad2Deg;
-        Debug.Log("boat Angle to wind = " + angletowind);
+        //Debug.Log("boat Angle to wind = " + angletowind);
         return angletowind;
         
     }
