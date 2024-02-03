@@ -425,7 +425,7 @@ MonoBehaviour:
   sail: {fileID: 7394213720020363068}
   rotationPoint: {fileID: 4759336488849613390}
   targetAngle: 0
-  rotationSpeed: 20
+  rotationSpeed: 150
 --- !u!114 &6115471486809442706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,7 +440,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windDirection: {x: 0, y: 0}
   windSpeed: 0
-  rb: {fileID: 0}
+  sailStep: 3
+  rb: {fileID: 109499866425201304}
+  sail: {fileID: 7336400911358983567}
 --- !u!114 &1636227292144045839
 MonoBehaviour:
   m_ObjectHideFlags: 0

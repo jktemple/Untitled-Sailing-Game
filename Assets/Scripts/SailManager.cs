@@ -10,14 +10,21 @@ public class SailManager : MonoBehaviour
     public Transform sail;
     public Transform rotationPoint;
 
+    [SerializeField]
     [Range(-70f,70f)]
-    public float targetAngle = 0f;
-    public float rotationSpeed = 20f;
+    private float targetAngle = 0f;
+    [SerializeField]
+    private float normalRotationSpeed = 50f;
+    [SerializeField]
+    private float tackingRotationalSpeed = 150f;
+    private float currentRotationSpeed;
+
+    private bool tacking = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentRotationSpeed = normalRotationSpeed;
     }
 
     // Update is called once per frame
@@ -59,10 +66,16 @@ public class SailManager : MonoBehaviour
         
         if (direction > 0) 
         {
-            sail.RotateAround(rotationPoint.position, rotationPoint.forward, rotationSpeed * Time.deltaTime);
+            sail.RotateAround(rotationPoint.position, rotationPoint.forward, currentRotationSpeed * Time.deltaTime);
         } else if (direction < 0)
         {
-            sail.RotateAround(rotationPoint.position, rotationPoint.forward, -rotationSpeed * Time.deltaTime);
+            sail.RotateAround(rotationPoint.position, rotationPoint.forward, -currentRotationSpeed * Time.deltaTime);
+        }
+        Debug.Log("Temp Target Angle = " + tempTargetAngle + " local euler angle = " + sail.localEulerAngles.y);
+        if(tacking && Mathf.Abs(tempTargetAngle - sail.localEulerAngles.y) <1.5)
+        {
+            tacking = false;
+            currentRotationSpeed = normalRotationSpeed;
         }
         
 
@@ -82,5 +95,47 @@ public class SailManager : MonoBehaviour
         {
             return 360 - sail.localEulerAngles.y;
         }
+    }
+
+    public void SetTargetAngle(float angle)
+    {
+        if (tacking) return;
+        if (angle < -70f)
+        {
+            targetAngle = -70f;
+        } else if (angle > 70f)
+        {
+            targetAngle = 70f;
+        } else
+        {
+            targetAngle = angle;
+        }
+    }
+
+    public void AddToSailAngle(float angle)
+    {
+        if (tacking) return;
+        targetAngle += angle;
+        if (targetAngle < -70f)
+        {
+            targetAngle = -70f;
+        }
+        else if (targetAngle > 70f)
+        {
+            targetAngle = 70f;
+        }
+       
+    }
+
+    public void Tack()
+    {
+        targetAngle*=-1;
+        tacking= true;
+        currentRotationSpeed = tackingRotationalSpeed;
+    }
+
+    public void SetSailRotationSpeed(float speed)
+    {
+       currentRotationSpeed = speed;
     }
 }

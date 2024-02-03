@@ -53,6 +53,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SailDown"",
+                    ""type"": ""Value"",
+                    ""id"": ""3ba8773f-67e5-4ff4-a579-8595c1755190"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -191,10 +200,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4c884806-fa8b-4eef-a064-4c98343dc274"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/rightStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Tack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -207,6 +216,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""SailUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a8a5004-5c20-48f6-9a2d-14c5319fd50b"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": ""Circle(counterClockwise=true)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SailDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -797,6 +817,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Tack = m_Player.FindAction("Tack", throwIfNotFound: true);
         m_Player_SailUp = m_Player.FindAction("SailUp", throwIfNotFound: true);
+        m_Player_SailDown = m_Player.FindAction("SailDown", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -873,6 +894,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Tack;
     private readonly InputAction m_Player_SailUp;
+    private readonly InputAction m_Player_SailDown;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -880,6 +902,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Tack => m_Wrapper.m_Player_Tack;
         public InputAction @SailUp => m_Wrapper.m_Player_SailUp;
+        public InputAction @SailDown => m_Wrapper.m_Player_SailDown;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -898,6 +921,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SailUp.started += instance.OnSailUp;
             @SailUp.performed += instance.OnSailUp;
             @SailUp.canceled += instance.OnSailUp;
+            @SailDown.started += instance.OnSailDown;
+            @SailDown.performed += instance.OnSailDown;
+            @SailDown.canceled += instance.OnSailDown;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -911,6 +937,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SailUp.started -= instance.OnSailUp;
             @SailUp.performed -= instance.OnSailUp;
             @SailUp.canceled -= instance.OnSailUp;
+            @SailDown.started -= instance.OnSailDown;
+            @SailDown.performed -= instance.OnSailDown;
+            @SailDown.canceled -= instance.OnSailDown;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1096,6 +1125,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnTack(InputAction.CallbackContext context);
         void OnSailUp(InputAction.CallbackContext context);
+        void OnSailDown(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

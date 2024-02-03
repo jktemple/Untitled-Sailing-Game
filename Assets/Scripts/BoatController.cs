@@ -7,12 +7,21 @@ public class BoatController : MonoBehaviour
 
     public Vector2 windDirection;
     public float windSpeed;
+    [Range(0f, 25f)]
+    public float sailStep = 5f;
 
     public Rigidbody rb;
+    public SailManager sail;
+
+    private PlayerInput inputs;
     // Start is called before the first frame update
     void Start()
     {
-        
+        inputs = new PlayerInput();
+        inputs.Player.Enable();
+        inputs.Player.SailUp.performed += sailUpAction => { sail.AddToSailAngle(sailStep); };
+        inputs.Player.SailDown.performed += sailDownAction => { sail.AddToSailAngle(-sailStep); };
+        inputs.Player.Tack.performed += tackAction => { sail.Tack(); };
     }
 
     // Update is called once per frame
