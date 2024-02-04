@@ -9,11 +9,17 @@ public class BoatController : MonoBehaviour
     public float windSpeed;
     [Range(0f, 25f)]
     public float sailStep = 5f;
+    public float keyboardSailSpeed = 20f;
+
+    public float rotationSpeed = 20f;
 
     public Rigidbody rb;
     public SailManager sail;
 
+ 
     private PlayerInput inputs;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +30,33 @@ public class BoatController : MonoBehaviour
         inputs.Player.Tack.performed += tackAction => { sail.Tack(); };
     }
 
+    private void Update()
+    {
+        if (inputs.Player.KeyboardSailUP.ReadValue<float>() !=0)
+        {
+            sail.AddToSailAngle(sailStep*Time.deltaTime*keyboardSailSpeed);
+        } else if (inputs.Player.KeyboardSailDown.ReadValue<float>() !=0)
+        {
+            sail.AddToSailAngle(-sailStep*Time.deltaTime*keyboardSailSpeed);
+        }
+
+
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
+        float inputValue = inputs.Player.Steer.ReadValue<float>();
+        Vector3 currentRotation = rb.rotation.eulerAngles;
+        Vector3 targetRotation = new Vector3(currentRotation.x, currentRotation.y + (inputValue*Time.fixedDeltaTime*rotationSpeed), currentRotation.z);
+        rb.MoveRotation(Quaternion.Euler(targetRotation));
+        float boatAngle = GetBoatAngleToWind();
+        float sailAngle = sail.GetSailAngleRelativeToBoat();
+        PointOfSail point = PointsOfSail.Instance.GetPointOfSailFromAngle(boatAngle);
+        float sailModifier = PointsOfSail.Instance.GetSailSpeedModifier(point.id, sailAngle);
+        Debug.Log("SailModifier = " + sailModifier);
+        Debug.Log("Point.SpeedModifier = " + point.speedModifier);
+        rb.AddForce(point.speedModifier * sailModifier * windSpeed * transform.forward *Time.fixedDeltaTime, ForceMode.Force);
         /**
          * float boatAngleModifier = ...
          * float sailAngleModifier = ...

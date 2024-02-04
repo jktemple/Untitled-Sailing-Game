@@ -9,6 +9,7 @@ public class SailManager : MonoBehaviour
 
     public Transform sail;
     public Transform rotationPoint;
+    public ClothController clothController;
 
     [SerializeField]
     [Range(-70f,70f)]
@@ -17,6 +18,8 @@ public class SailManager : MonoBehaviour
     private float normalRotationSpeed = 50f;
     [SerializeField]
     private float tackingRotationalSpeed = 150f;
+    [SerializeField]
+    private float luffingModifier = 50f;
     private float currentRotationSpeed;
 
     private bool tacking = false;
@@ -30,6 +33,13 @@ public class SailManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RotateSail();
+        HandleLuffing();
+
+    }
+
+    void RotateSail()
+    {
         float direction = 0;
         float tempTargetAngle = targetAngle;
         if (targetAngle < 0f)
@@ -37,48 +47,66 @@ public class SailManager : MonoBehaviour
             tempTargetAngle = 360 + targetAngle;
         }
 
-        if (targetAngle>= 0f)
+        if (targetAngle >= 0f)
         {
-            if(sail.localEulerAngles.y < 360f && sail.localEulerAngles.y > 270f)
-            {
-                direction= 1;
-            } else if(sail.localEulerAngles.y < tempTargetAngle)
+            if (sail.localEulerAngles.y < 360f && sail.localEulerAngles.y > 270f)
             {
                 direction = 1;
-            } else if(sail.localEulerAngles.y > tempTargetAngle)
+            }
+            else if (sail.localEulerAngles.y < tempTargetAngle)
+            {
+                direction = 1;
+            }
+            else if (sail.localEulerAngles.y > tempTargetAngle)
             {
                 direction = -1;
             }
-        } else
+        }
+        else
         {
             if (sail.localEulerAngles.y < 90f)
             {
                 direction = -1;
-            } else if(sail.localEulerAngles.y > 270f && sail.localEulerAngles.y > tempTargetAngle)
+            }
+            else if (sail.localEulerAngles.y > 270f && sail.localEulerAngles.y > tempTargetAngle)
             {
                 direction = -1;
-            } else if(sail.localEulerAngles.y > 270f && sail.localEulerAngles.y < tempTargetAngle)
+            }
+            else if (sail.localEulerAngles.y > 270f && sail.localEulerAngles.y < tempTargetAngle)
             {
                 direction = 1;
             }
         }
 
-        
-        if (direction > 0) 
+
+        if (direction > 0)
         {
             sail.RotateAround(rotationPoint.position, rotationPoint.forward, currentRotationSpeed * Time.deltaTime);
-        } else if (direction < 0)
+        }
+        else if (direction < 0)
         {
             sail.RotateAround(rotationPoint.position, rotationPoint.forward, -currentRotationSpeed * Time.deltaTime);
         }
-        Debug.Log("Temp Target Angle = " + tempTargetAngle + " local euler angle = " + sail.localEulerAngles.y);
-        if(tacking && Mathf.Abs(tempTargetAngle - sail.localEulerAngles.y) <1.5)
+        //Debug.Log("Temp Target Angle = " + tempTargetAngle + " local euler angle = " + sail.localEulerAngles.y);
+        if (tacking && Mathf.Abs(tempTargetAngle - sail.localEulerAngles.y) < 1.5)
         {
             tacking = false;
             currentRotationSpeed = normalRotationSpeed;
         }
-        
+    }
 
+    void HandleLuffing()
+    {
+        float sailAngle = GetSailAngleRelativeToBoat();
+        PointOfSail point = PointsOfSail.Instance.GetPointOfSailFromAngle(sailAngle);
+        if(sailAngle > point.sailAngleMax)
+        {
+            float luffyValue = luffingModifier * Mathf.InverseLerp(point.sailAngleMax, 70f, sailAngle);
+            clothController.SetRandomAcceleration(luffyValue);
+        } else
+        {
+            clothController.SetRandomAcceleration(0.0f);
+        }
     }
 
     public float GetSailAngleRaw()

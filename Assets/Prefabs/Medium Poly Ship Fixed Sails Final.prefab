@@ -424,8 +424,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sail: {fileID: 7394213720020363068}
   rotationPoint: {fileID: 4759336488849613390}
+  clothController: {fileID: 1636227292144045839}
   targetAngle: 0
-  rotationSpeed: 150
+  normalRotationSpeed: 50
+  tackingRotationalSpeed: 150
+  luffingModifier: 50
 --- !u!114 &6115471486809442706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +444,7 @@ MonoBehaviour:
   windDirection: {x: 0, y: 0}
   windSpeed: 0
   sailStep: 3
+  keyboardSailSpeed: 20
   rb: {fileID: 109499866425201304}
   sail: {fileID: 7336400911358983567}
 --- !u!114 &1636227292144045839
@@ -457,7 +461,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sail: {fileID: 7792113753134992757}
   boat: {fileID: 6115471486809442706}
-  windStrengthModifier: 100
+  windStrengthModifierX: 100
+  windStrengthModifierY: 100
 --- !u!1 &817723815396421714
 GameObject:
   m_ObjectHideFlags: 0

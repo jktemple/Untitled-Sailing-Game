@@ -50,12 +50,14 @@ public sealed class PointsOfSail
         PointOfSail beamReach = new("Beam Reach", 0.75f, 105f, Sail.BeamReach, 33f, 38f);
         PointOfSail broadReach = new("Broad Reach", 0.9f, 140, Sail.BroadReach, 47f, 52f);
         PointOfSail run = new("Run", 0.6f, 180, Sail.Run, 60f, 67f);
+        PointOfSail error = new("Error", 0, 0, Sail.Unknown, 0, 0);
         dict.Add(Sail.Irons, irons);
         dict.Add(Sail.CloseHauled, closeHauled);
         dict.Add(Sail.CloseReach, closeReach);
         dict.Add(Sail.BeamReach, beamReach);
         dict.Add(Sail.BroadReach, broadReach);
         dict.Add(Sail.Run, run);
+        dict.Add(Sail.Unknown, error);
     }
 
     public static PointsOfSail Instance
@@ -67,34 +69,34 @@ public sealed class PointsOfSail
         }
     }
 
-    public Sail GetPointOfSailFromAngle(float angle)
+    public PointOfSail GetPointOfSailFromAngle(float angle)
     {
         if (angle < dict[Sail.Irons].angle)
         {
-            return Sail.Irons;
+            return dict[Sail.Irons];
         }
         else if (angle < dict[Sail.CloseHauled].angle)
         {
-            return Sail.CloseHauled;
+            return dict[Sail.CloseHauled];
         }
         else if (angle < dict[Sail.CloseReach].angle)
         {
-            return Sail.CloseReach;
+            return dict[Sail.CloseReach];
         }
         else if (angle < dict[Sail.BeamReach].angle)
         {
-            return Sail.BeamReach;
+            return dict[Sail.BeamReach];
         }
         else if (angle < dict[Sail.BroadReach].angle)
         {
-            return Sail.BroadReach;
+            return dict[Sail.BroadReach];
         }
         else if (angle < dict[Sail.Run].angle)
         {
-            return Sail.Run;
+            return dict[Sail.Run];
         } else
         {
-            return Sail.Unknown;
+            return dict[Sail.Unknown];
         }
     }
 
