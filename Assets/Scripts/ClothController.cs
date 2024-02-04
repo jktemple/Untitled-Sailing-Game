@@ -7,7 +7,8 @@ public class ClothController : MonoBehaviour
     public Cloth sail;
     public BoatController boat;
 
-    public float windStrengthModifier = 100f;
+    public float windStrengthModifierX = 100f;
+    public float windStrengthModifierY = 100f;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,7 @@ public class ClothController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sail.externalAcceleration = -windStrengthModifier * new Vector3(boat.windDirection.x, 0, boat.windDirection.y).normalized;
+        Vector3 temp = new Vector3(boat.windDirection.x, 0, boat.windDirection.y).normalized;
+        sail.externalAcceleration = new Vector3(-temp.x*windStrengthModifierX, 0, -temp.z*windStrengthModifierY);
     }
 }

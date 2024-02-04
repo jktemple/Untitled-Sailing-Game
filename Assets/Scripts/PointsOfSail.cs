@@ -8,14 +8,18 @@ public struct PointOfSail
     public float speedModifier;
     public float angle;
     public Sail id;
+    public float sailAngleMin;
+    public float sailAngleMax;
 
-    public PointOfSail(string name, float speedModifier, float angle, Sail id)
+    public PointOfSail(string name, float speedModifier, float angle, Sail id, float sailAngleMin, float sailAngleMax)
     {
 
         this.name = name;
         this.speedModifier = speedModifier;
         this.angle = angle;
         this.id = id;
+        this.sailAngleMin= sailAngleMin;
+        this.sailAngleMax= sailAngleMax;
     }
 }
 
@@ -35,15 +39,17 @@ public sealed class PointsOfSail
     private static PointsOfSail instance = null;
     public Dictionary<Sail, PointOfSail> dict;
 
+
+    //Need to update once figured out what the sail angle mins and max are
     private PointsOfSail()
     {
         dict = new Dictionary<Sail, PointOfSail>();
-        PointOfSail irons = new("In Irons", 0f, 45f, Sail.Irons);
-        PointOfSail closeHauled = new("Close Hauled", 0.25f, 55, Sail.CloseHauled);
-        PointOfSail closeReach = new("Close Reach", 0.5f, 75f, Sail.CloseReach);
-        PointOfSail beamReach = new("Beam Reach", 0.75f, 105f, Sail.BeamReach);
-        PointOfSail broadReach = new("Broad Reach", 0.9f, 140, Sail.BroadReach);
-        PointOfSail run = new("Run", 0.6f, 180, Sail.Run);
+        PointOfSail irons = new("In Irons", 0f, 45f, Sail.Irons,0f,70f);
+        PointOfSail closeHauled = new("Close Hauled", 0.25f, 55, Sail.CloseHauled,8f,13f);
+        PointOfSail closeReach = new("Close Reach", 0.5f, 75f, Sail.CloseReach, 20f, 25f);
+        PointOfSail beamReach = new("Beam Reach", 0.75f, 105f, Sail.BeamReach, 33f, 38f);
+        PointOfSail broadReach = new("Broad Reach", 0.9f, 140, Sail.BroadReach, 47f, 52f);
+        PointOfSail run = new("Run", 0.6f, 180, Sail.Run, 60f, 67f);
         dict.Add(Sail.Irons, irons);
         dict.Add(Sail.CloseHauled, closeHauled);
         dict.Add(Sail.CloseReach, closeReach);
@@ -156,5 +162,20 @@ public sealed class PointsOfSail
         }
     }
 
-
+    public float GetSailSpeedModifier(Sail point, float sailAngle)
+    {
+        float sailMin = dict[point].sailAngleMin;
+        float sailMax = dict[point].sailAngleMax;
+        if(sailAngle > sailMin && sailAngle < sailMax)
+        {
+            return 1;
+        } else if(sailAngle < sailMin)
+        {
+            return Mathf.InverseLerp(0f, sailMin, sailAngle);
+        }
+        else
+        {
+            return Mathf.InverseLerp(sailMax, 70f, sailAngle);
+        }
+    }
 }

@@ -83,6 +83,10 @@ public class SailManager : MonoBehaviour
 
     public float GetSailAngleRaw()
     {
+        if (sail.localEulerAngles.y > 70f)
+        {
+            return sail.localEulerAngles.y - 360;
+        }
         return sail.localEulerAngles.y;
     }
 
