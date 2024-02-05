@@ -49,7 +49,7 @@ public sealed class PointsOfSail
         PointOfSail closeReach = new("Close Reach", 0.5f, 75f, Sail.CloseReach, 20f, 25f);
         PointOfSail beamReach = new("Beam Reach", 0.75f, 105f, Sail.BeamReach, 33f, 38f);
         PointOfSail broadReach = new("Broad Reach", 0.9f, 140, Sail.BroadReach, 47f, 52f);
-        PointOfSail run = new("Run", 0.6f, 180, Sail.Run, 60f, 67f);
+        PointOfSail run = new("Run", 0.6f, 180, Sail.Run, 60f, 70f);
         PointOfSail error = new("Error", 0, 0, Sail.Unknown, 0, 0);
         dict.Add(Sail.Irons, irons);
         dict.Add(Sail.CloseHauled, closeHauled);
@@ -177,7 +177,7 @@ public sealed class PointsOfSail
         }
         else
         {
-            return Mathf.InverseLerp(sailMax, 70f, sailAngle);
+            return 1-Mathf.InverseLerp(sailMax, 70f, sailAngle);
         }
     }
 }
